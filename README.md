@@ -76,8 +76,6 @@ Nesta sprint, foram realizadas atividades relacionadas ao **planejamento**, **le
 ### 🔄 Quadro de tarefas Em Andamento
 ![Em Andamento](coloque-o-link-ou-upload-da-imagem-aqui)
 
-> Substituir os campos acima pelos links das imagens ou realizar o upload diretamente no Notion ou GitHub.
-
 ---
 
 ## 📌 Conclusão da Sprint
