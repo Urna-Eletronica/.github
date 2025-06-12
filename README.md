@@ -1,7 +1,7 @@
 # 📄 Documentação da Sprint – Sistema de Urna 🎶
 
 **Projeto:** Urna Eletrônica – Melhor Música do Ano  
-**Período:** 29/05/2025 até 04/06/2025  
+**Período:** 29/05/2025 até 18/06/2025  
 **Curso:** Análise e Desenvolvimento de Sistemas  
 
 ## 👥 Equipe
