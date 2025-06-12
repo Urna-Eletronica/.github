@@ -9,21 +9,41 @@ class TelaLogin(ft.Container):
         self.on_adm = adm
         self.on_cadastro = cadastro_callback
 
+        self.imagem_fundo = ft.Image(
+            src="fundo_usuario.png",
+        )
+
+        self.imagem_logo = ft.Image(
+            src=""
+        )
+
+        self.footer = ft.Container(
+            bgcolor="#000000",
+            opacity=0.44,
+            text="© 2025 Quarteto Music Awards. Todos os direitos reservados."
+        )
+
         self.email = ft.TextField(
             label="Digite seu email",
             width=300,
-            height=50
+            height=50,
+            bgcolor="#000000",
+            opacity=0.49
         )
 
         self.senha = ft.TextField(
             label="Digite sua senha",
             password=True,
             width=300,
-            height=50
+            height=50,
+            bgcolor="#000000",
+            opacity=0.49
         )
 
         self.confirmar = ft.ElevatedButton(
-            text="confirmar",
+            text="Entrar",
+            bgcolor="#000000",
+            opacity=0.49,
             on_click=self.verificar
         )
 
@@ -32,12 +52,18 @@ class TelaLogin(ft.Container):
             on_click=self.go_cadastro
         )
 
+        self.container_principal = ft.Container(
+            bgcolor = "#000000",
+            opacity = 0.44,
+            content = [self.imagem_logo, ft.Text("Seja bem-vindo"), self.email, self.senha, self.confirmar, self.cadastro],
+            horizontal_alignment = ft.CrossAxisAlignment.CENTER,
+            alignment=ft.MainAxisAlignment.CENTER
+        )
 
         self.content = (
-            ft.Column(
-                controls=[self.email,self.senha,self.confirmar,self.cadastro],
-                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                alignment=ft.MainAxisAlignment.CENTER
+            ft.Stack(
+                self.imagem_fundo,
+                self.container_principal
             )
         )
     
