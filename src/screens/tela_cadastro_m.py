@@ -2,8 +2,15 @@ import flet as ft
 import sqlite3 as sql
 
 class TelaCadastroM(ft.Container):
-    def __init__(self):
+    def __init__(self, voltar_callback):
         super().__init__()
+
+        self.voltar_callback = voltar_callback
+
+        self.voltar_btn = ft.ElevatedButton(
+            text="Voltar",
+            on_click=self.voltar
+        )
 
         self.nome_m = ft.TextField(
             label="Digite o nome da música",
@@ -45,7 +52,7 @@ class TelaCadastroM(ft.Container):
         self.content = (
             ft.Column(
                 controls=[
-                    self.nome_m,self.autor,self.novo_autor,self.tirar_input,self.genero,self.confirmar
+                    self.voltar_btn,self.nome_m,self.autor,self.novo_autor,self.tirar_input,self.genero,self.confirmar
                     ]
             )
         )
@@ -141,3 +148,6 @@ class TelaCadastroM(ft.Container):
 
         except sql.IntegrityError:
             print("Erro: CPF ou e-mail já cadastrado.")
+        
+    def voltar(self, e):
+        self.voltar_callback()

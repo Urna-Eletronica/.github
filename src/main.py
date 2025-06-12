@@ -4,6 +4,7 @@ from screens.tela_cadastro import TelaCadastro
 from screens.tela_login import TelaLogin
 from screens.tela_inicio_adm import TelaInicioAdm
 from screens.tela_cadastro_m import TelaCadastroM
+from screens.tela_votacao import TelaVotacao
 
 conn = sql.connect('urna.db')
 cursor = conn.cursor()
@@ -102,7 +103,7 @@ def main(page: ft.Page):
 
     def abrir_voto():
         page.controls.clear()
-        page.add(ft.Text("Tela de Votação"))
+        page.add(TelaVotacao())
 
     def abrir_adm():
         page.controls.clear()
@@ -110,7 +111,7 @@ def main(page: ft.Page):
     
     def abrir_cadastro_m():
         page.controls.clear()
-        page.add(TelaCadastroM())
+        page.add(TelaCadastroM(abrir_adm))
 
     # Inicia na tela de login
     abrir_login()
