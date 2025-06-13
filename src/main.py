@@ -1,5 +1,6 @@
 import flet as ft
 import sqlite3 as sql
+import pyautogui as ag
 from screens.tela_cadastro import TelaCadastro
 from screens.tela_login import TelaLogin
 from screens.tela_inicio_adm import TelaInicioAdm
@@ -87,6 +88,12 @@ conn.close()
 def main(page: ft.Page):
     page.title = "Sistema de Votação"
 
+    window_width, window_height = ag.size()
+    page.window.resizable = False
+    page.window.left = (window_width - page.window.width)/2
+    page.window.top = (window_height - page.window.height)/2
+    page.padding = 0
+
     def abrir_login():
         page.controls.clear()
         page.add(
@@ -116,4 +123,6 @@ def main(page: ft.Page):
     # Inicia na tela de login
     abrir_login()
 
-ft.app(target=main, view=ft.WEB_BROWSER)
+ft.app(target=main,
+    view=ft.FLET_APP
+)
