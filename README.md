@@ -1,88 +1,44 @@
-# 📄 Documentação da Sprint – Sistema de Urna 🎶
+# 🎶 Urna Eletrônica de Músicas – SENAI Morvan Figueiredo
+🚧 Projeto em desenvolvimento! 🚧
 
-**Projeto:** Urna Eletrônica – Melhor Música do Ano  
-**Período:** 29/05/2025 até 18/06/2025  
-**Curso:** Análise e Desenvolvimento de Sistemas  
+Este repositório faz parte do projeto de uma **Urna Eletrônica Multiplataforma para votação de músicas**, desenvolvido pelos alunos do curso técnico em Desenvolvimento de Sistemas do **SENAI "Morvan Figueiredo"**.
 
-## 👥 Equipe
-- 👨‍💼 **Rian Prates da Silva Oliveira** – Product Owner (P.O)  
-- 🧠 **Lucas Garcia Beni** – Scrum Master  
-- 💻 **Luiz Enrique Silva Souza** – Desenvolvedor (DEV)  
-- 💻 **Leandro Yuuki de Moura Carvalho** – Desenvolvedor (DEV)  
+O objetivo é criar um aplicativo funcional que simule uma urna eletrônica, onde os usuários poderão votar na sua música favorita. O sistema terá suporte para **desktop, web e mobile (Android)**, utilizando **Python, Flet e SQLite**.
 
 ---
 
-## 🧠 Introdução
-O presente documento tem como objetivo registrar todas as atividades desenvolvidas na sprint referente ao projeto de desenvolvimento de uma **urna eletrônica para votação da melhor música do ano**.
-
-O sistema tem como proposta ser **intuitivo, eficiente e confiável**, permitindo que os usuários escolham sua música favorita de forma simples e segura.
-
-Nesta sprint, foram realizadas atividades relacionadas ao **planejamento**, **levantamento de requisitos**, **modelagem de banco de dados** e início do **desenvolvimento do layout e fluxo de telas da aplicação**.
-
----
-
-## 📅 Quadro da Sprint
-
-| ✅ Status     | 📌 Tarefa                                                   | 🗒️ Descrição                                                                 | 📆 Data         |
-|--------------|-------------------------------------------------------------|------------------------------------------------------------------------------|-----------------|
-| ✔️ Finalizado | Criar o repositório GitHub                                 | Criação do repositório para versionamento e colaboração.                     | 29/05/2025      |
-| ✔️ Finalizado | Criar o Kanban no Trello                                   | Organização das tarefas e acompanhamento do progresso no Trello.            | 29/05/2025      |
-| ✔️ Finalizado | Definir quem faz o quê                                      | Distribuição das funções e responsabilidades entre os integrantes.          | 29/05/2025      |
-| ✔️ Finalizado | Definir os requisitos do sistema                            | Levantamento dos requisitos funcionais e não funcionais.                     | 30/05/2025      |
-| ✔️ Finalizado | Criar diagrama para esboço do funcionamento da urna         | Representação visual do funcionamento geral da urna.                         | 30/05/2025      |
-| ✔️ Finalizado | Criar modelo conceitual do banco de dados                   | Criação do modelo conceitual com entidades e relacionamentos.                | 31/05/2025      |
-| ✔️ Finalizado | Criar modelo lógico do banco de dados                       | Transformação do modelo conceitual em modelo lógico com tabelas e atributos.| 01/06/2025      |
-| ✔️ Finalizado | Criar o DER (Diagrama Entidade-Relacionamento)             | Documentação com entidades, relacionamentos, chaves e cardinalidades.        | 01/06/2025      |
-| 🔄 Em andamento | Montar layout (design do programa)                        | Desenvolvimento da interface gráfica, priorizando UX/UI.                    | Iniciado 02/06/2025 |
-| 🔄 Em andamento | Criar o fluxo de telas                                    | Definição da navegação entre telas (Ex.: Boas-vindas, Votação, Resultado). | Iniciado 02/06/2025 |
+## 🎯 Funcionalidades previstas:
+- ✅ Cadastro de músicas (nome da música e artista)
+- ✅ Votação por número da música
+- ✅ Apuração e exibição dos resultados (música mais votada)
+- ✅ Redefinir votos (reiniciar votação)
+- ✅ Interface responsiva para todas as plataformas (desktop, web e mobile)
 
 ---
 
-## 🚀 Entregas Concluídas
-
-### ✔️ Infraestrutura
-- Repositório no GitHub configurado  
-- Quadro Kanban no Trello organizado  
-
-### ✔️ Organização
-- Definição de papéis e responsabilidades da equipe  
-
-### ✔️ Análise
-- Levantamento dos requisitos  
-- Criação do diagrama de funcionamento da urna  
-
-### ✔️ Banco de Dados
-- Modelo conceitual desenvolvido  
-- Modelo lógico estruturado  
-- DER (Diagrama Entidade-Relacionamento) finalizado  
+## 🔧 Tecnologias utilizadas:
+- 🐍 **Python + Flet** → Interface gráfica (Desktop/Web/Celular)
+- 🗄️ **SQLite** → Banco de dados local
+- 🔗 **Git/GitHub** → Controle de versão
 
 ---
 
-## 🔧 Atividades em Andamento
-
-### 🎨 Montagem do layout (design do programa)
-- Criação do design das telas, levando em conta usabilidade, estética e responsividade
-
-### 🧭 Desenvolvimento do fluxo de telas
-- Definição de como o usuário navegará pelas telas do sistema
+## 📌 Estado do projeto:
+🚧 **Em desenvolvimento — atualizações constantes!** 🚧
 
 ---
 
-## 📸 Prévia do Projeto
-
-### ✅ Quadro de tarefas Finalizado
-![Finalizado](coloque-o-link-ou-upload-da-imagem-aqui)
-
-### 🔄 Quadro de tarefas Em Andamento
-![Em Andamento](coloque-o-link-ou-upload-da-imagem-aqui)
+## 💡 Objetivo do projeto:
+Criar uma urna eletrônica para votação de músicas favoritas, promovendo interação, aprendizado de desenvolvimento multiplataforma e aplicação de conceitos de banco de dados e interface gráfica.
 
 ---
 
-## 📌 Conclusão da Sprint
-A sprint foi encerrada de forma satisfatória, com todas as atividades de **planejamento, organização e modelagem concluídas com sucesso**.
+## 📷 Imagens (em breve)
+*(Adicione aqui imagens da interface assim que estiver disponível)*
 
-O time segue agora no desenvolvimento da **interface gráfica e do fluxo de navegação**, que serão concluídos na próxima sprint.
+---
 
-A utilização de ferramentas como **GitHub e Trello** se mostrou essencial para o controle das atividades e organização do projeto.
+## 🤝 Contribuições:
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues, sugerir melhorias ou fazer um fork deste projeto.
 
 ---
