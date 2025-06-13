@@ -10,6 +10,11 @@ class TelaVotacao(ft.Container):
 
         self.todos_os_cards = []
 
+        self.imagem_fundo = ft.Image(
+            src="../assets/fundo.png",
+            expand=True
+        )
+
         self.pesquisar = ft.TextField(
             label="Digite o nome da música",
             width=300,
@@ -21,7 +26,7 @@ class TelaVotacao(ft.Container):
             controls=[],
             scroll=ft.ScrollMode.AUTO,
             spacing=10
-)
+        )
 
         self.lista_musicas_scroll = ft.Container(
             content=self.lista_musicas,
@@ -31,10 +36,68 @@ class TelaVotacao(ft.Container):
             padding=10
         )
 
-        self.content = ft.Column(
-            controls=[self.pesquisar, self.lista_musicas_scroll]
+        self.container_principal = ft.Container(
+            content=ft.Column(
+                controls=[
+                    ft.Row(
+                        controls=[
+                            ft.Column(
+                                controls=[
+                                    ft.Container(
+                                        content=ft.Text("Bem-vindo a sessão de votação", color="#D6AB5F", size=22),
+                                        margin=ft.margin.only(left=20)
+                                    ),
+                                    ft.Divider(height=2, thickness=2, color="#D6AB5F"),
+                                    ft.Container(
+                                        content=ft.Text("Selecione logo abaixo sua música favorita", size=14),
+                                        margin=ft.margin.only(left=20)
+                                    )
+                                ],
+                                alignment=ft.MainAxisAlignment.CENTER,
+                                expand=1
+                            ),
+                            ft.Image(src="../assets/logo.png", width=160)
+                        ],
+                        alignment=ft.MainAxisAlignment.SPACE_AROUND
+                    ),
+                    self.pesquisar,
+                    self.lista_musicas_scroll,
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER
+            ),
+            padding=30,
+            bgcolor=ft.Colors.with_opacity(0.44, ft.Colors.BLACK),
+            border_radius=20,
+            width=700,
+            height=600
         )
 
+        self.footer = ft.Container(
+            content=ft.Text("© 2025 Quarteto Music Awards. Todos os direitos reservados.", weight="bold"),
+            padding=15,
+            alignment=ft.alignment.center
+        )
+
+        self.content = ft.Stack(
+            controls=[
+                self.imagem_fundo,
+                ft.Column(
+                    controls=[
+                        ft.Container(height=50),
+                        ft.Row(
+                            controls=[self.container_principal],
+                            alignment=ft.MainAxisAlignment.CENTER
+                        ),
+                        ft.Container(height=10),
+                        ft.Row(
+                            controls=[self.footer],
+                            alignment=ft.MainAxisAlignment.CENTER
+                        )
+                    ]
+                )
+            ]
+        )
 
     def did_mount(self):
         self.carregar_musicas()
