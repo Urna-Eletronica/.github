@@ -7,45 +7,105 @@ class TelaCadastro(ft.Container):
 
         self.login_callback = login_callback
 
+        self.imagem_fundo = ft.Image(
+            src="../assets/fundo.png",
+            expand=True
+        )
+
+        self.imagem_logo = ft.Image(
+            src="../assets/logo.png",
+            width=150
+        )
+
+        cor_inputs = ft.Colors.with_opacity(0.49, ft.Colors.BLACK)
+
         self.nome = ft.TextField(
             label="Digite seu nome",
-            width=300,
-            height=50
+            width=500,
+            height=50,
+            border_radius=10,
+            bgcolor=cor_inputs
         )
 
         self.cpf = ft.TextField(
             label="Digite seu cpf",
-            width=300,
-            height=50
+            width=500,
+            height=50,
+            border_radius=10,
+            bgcolor=cor_inputs
         )
 
         self.email = ft.TextField(
             label="Digite seu email",
-            width=300,
-            height=50
+            prefix_icon=ft.Icons.EMAIL,
+            width=500,
+            height=50,
+            border_radius=10,
+            bgcolor=cor_inputs
         )
 
         self.senha = ft.TextField(
             label="Digite sua senha",
             password=True,
-            width=300,
-            height=50
+            prefix_icon=ft.Icons.LOCK,
+            width=500,
+            height=50,
+            border_radius=10,
+            bgcolor=cor_inputs
         )
 
-        self.confirmar = ft.ElevatedButton(
-            text="confirmar",
-            on_click=self.salvar1
-        )
-        
-        self.login = ft.ElevatedButton(
-            text="Já tem uma conta?",
-            on_click=self.go_login
+        self.container_principal = ft.Container(
+            content=ft.Column(
+                controls=[
+                    ft.Text("Crie a sua conta", size=24, weight="bold", color="#D6AB5F"),
+                    ft.Text("Preencha seus dados logo abaixo", height=20),
+                    self.nome,
+                    self.cpf,
+                    self.email,
+                    self.senha,
+                    ft.ElevatedButton(text="Criar conta", width=200, height=45, color="#D6AB5F", on_click=self.salvar1),
+                    ft.Row(
+                        controls=[
+                            ft.Text("Já tem uma conta?"),
+                            ft.TextButton(text="Entrar", on_click=self.go_login),
+                        ],
+                        alignment=ft.MainAxisAlignment.CENTER
+                    )
+                ],
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                spacing=20
+            ),
+            padding=20,
+            bgcolor=ft.Colors.with_opacity(0.44, ft.Colors.BLACK),
+            border_radius=20,
+            width=600,
+            height=500
         )
 
-        self.content = (
-            ft.Column(
-                controls=[self.nome,self.cpf,self.email,self.senha,self.confirmar,self.login]
-            )
+        self.footer = ft.Container(
+            content=ft.Text("© 2025 Quarteto Music Awards. Todos os direitos reservados.", weight="bold"),
+            padding=15,
+            alignment=ft.alignment.center
+        )
+
+        self.content = ft.Stack(
+            controls=[
+                self.imagem_fundo,
+                ft.Column(
+                    controls=[
+                        ft.Container(height=50),
+                        ft.Row(
+                            controls=[self.container_principal],
+                            alignment=ft.MainAxisAlignment.CENTER
+                        ),
+                        ft.Container(height=10),
+                        ft.Row(
+                            controls=[self.footer],
+                            alignment=ft.MainAxisAlignment.CENTER
+                        )
+                    ]
+                )
+            ]
         )
 
     def salvar1(self, e):

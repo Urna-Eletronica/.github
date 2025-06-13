@@ -42,7 +42,7 @@ class TelaLogin(ft.Container):
                 controls=[
                     self.imagem_logo,
                     ft.Text("ACESSO À PLATAFORMA", size=24, weight="bold", color="#D6AB5F"),
-                    ft.Text("Seja bem-vindo!", height=80),
+                    ft.Text("Seja bem-vindo!", height=40),
                     self.email,
                     self.senha,
                     ft.ElevatedButton(text="Entrar", width=200, height=45, color="#D6AB5F", on_click=self.verificar),
@@ -60,7 +60,8 @@ class TelaLogin(ft.Container):
             padding=20,
             bgcolor=ft.Colors.with_opacity(0.44, ft.Colors.BLACK),
             border_radius=20,
-            width=600
+            width=600,
+            height=500
         )
 
         self.footer = ft.Container(
