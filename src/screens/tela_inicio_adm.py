@@ -2,8 +2,10 @@ import flet as ft
 import sqlite3 as sql
 
 class TelaInicioAdm(ft.Container):
-    def __init__(self, votar_callback, cadastro_m_callback):
+    def __init__(self, votar_callback, cadastro_m_callback, id_user):
         super().__init__()
+
+        self.id_user = id_user
 
         self.cadastro_m_callback = cadastro_m_callback
         # self.cadastro_g_callback = cadastro_g_callback

@@ -97,19 +97,19 @@ class TelaLogin(ft.Container):
             conn = sql.connect('urna.db')
             cursor = conn.cursor()
             cursor.execute('''
-                SELECT senha_user, cargo FROM dimUsuarios WHERE email_user = ?
+                SELECT id_user, senha_user, cargo FROM dimUsuarios WHERE email_user = ?
             ''', (self.email.value,))
 
             resultado = cursor.fetchone()
 
             if resultado:
-                senha_bd, cargo = resultado
+                id_user, senha_bd, cargo = resultado
                 if senha_bd == self.senha.value:
                     print("Login correto!")
                     if cargo == 'adm':
-                        self.on_adm()
+                        self.on_adm(id_user)
                     else:
-                        self.on_voto()
+                        self.on_voto(id_user)
                 else:
                     print("Senha incorreta!")
             else:

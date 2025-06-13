@@ -108,13 +108,13 @@ def main(page: ft.Page):
         page.controls.clear()
         page.add(TelaCadastro(abrir_login))
 
-    def abrir_voto():
+    def abrir_voto(id_user):
         page.controls.clear()
-        page.add(TelaVotacao())
+        page.add(TelaVotacao(id_user))
 
-    def abrir_adm():
+    def abrir_adm(id_user):
         page.controls.clear()
-        page.add(TelaInicioAdm(abrir_voto, abrir_cadastro_m))
+        page.add(TelaInicioAdm(abrir_voto, abrir_cadastro_m, id_user))
     
     def abrir_cadastro_m():
         page.controls.clear()
