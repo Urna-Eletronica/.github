@@ -11,18 +11,29 @@ class TelaVotacao(ft.Container):
             height=50
         )
 
-        self.a = ft.ElevatedButton(
-            text="a",
-            on_click=self.carregar_musicas
-        )
+        self.lista_musicas = ft.Column(
+            controls=[],
+            scroll=ft.ScrollMode.AUTO,
+            spacing=10
+)
 
-        self.musicas_disponiveis = []
+        self.lista_musicas_scroll = ft.Container(
+            content=self.lista_musicas,
+            height=400,
+            bgcolor="#1e1e1e",
+            border_radius=10,
+            padding=10
+        )
 
         self.content = ft.Column(
-            controls=[self.pesquisar, self.a]
+            controls=[self.pesquisar, self.lista_musicas_scroll]
         )
 
-    def carregar_musicas(self, e):
+
+    def did_mount(self):
+        self.carregar_musicas()
+
+    def carregar_musicas(self):
         try:
             conn = sql.connect('urna.db')
             cursor = conn.cursor()
@@ -43,10 +54,11 @@ class TelaVotacao(ft.Container):
                     width=300
                 )
 
-                self.content.controls.insert(-1, nova_musica)
-                self.update()
+                self.lista_musicas.controls.append(nova_musica)
+
+            self.update()
 
             conn.close()
 
-        except sql.IntegrityError:
-            print("Erro: CPF ou e-mail já cadastrado.")
+        except sql.Error as e:
+            print("Erro ao carregar músicas:", e)

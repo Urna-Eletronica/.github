@@ -86,10 +86,6 @@ conn.close()
 
 def main(page: ft.Page):
     page.title = "Sistema de Votação"
-    page.fonts = {
-        "Spectral": "",
-        "Spectral_SC": "/assets/Spectral_SC"
-    }
 
     def abrir_login():
         page.controls.clear()

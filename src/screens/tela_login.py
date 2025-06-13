@@ -10,7 +10,7 @@ class TelaLogin(ft.Container):
         self.on_cadastro = cadastro_callback
 
         self.imagem_fundo = ft.Image(
-            src="fundo_usuario.png",
+            src="../assets/fundo_usuario.png",
         )
 
         self.imagem_logo = ft.Image(
@@ -20,7 +20,7 @@ class TelaLogin(ft.Container):
         self.footer = ft.Container(
             bgcolor="#000000",
             opacity=0.44,
-            text="© 2025 Quarteto Music Awards. Todos os direitos reservados."
+            content=ft.Text("© 2025 Quarteto Music Awards. Todos os direitos reservados.")
         )
 
         self.email = ft.TextField(
@@ -53,20 +53,27 @@ class TelaLogin(ft.Container):
         )
 
         self.container_principal = ft.Container(
-            bgcolor = "#000000",
-            opacity = 0.44,
-            content = [self.imagem_logo, ft.Text("Seja bem-vindo"), self.email, self.senha, self.confirmar, self.cadastro],
-            horizontal_alignment = ft.CrossAxisAlignment.CENTER,
-            alignment=ft.MainAxisAlignment.CENTER
+            content=ft.Column(
+                controls=[
+                    self.imagem_logo,
+                    ft.Text("Seja bem-vindo"),
+                    self.email,
+                    self.senha,
+                    self.confirmar,
+                    self.cadastro
+                ]
+            )
         )
 
         self.content = (
             ft.Stack(
-                self.imagem_fundo,
-                self.container_principal
+                controls=[
+                    self.imagem_fundo,
+                    self.container_principal
+                ]
             )
         )
-    
+
     def verificar(self, e):
         try:
             conn = sql.connect('urna.db')
@@ -81,17 +88,15 @@ class TelaLogin(ft.Container):
                 senha_bd, cargo = resultado
                 if senha_bd == self.senha.value:
                     print("Login correto!")
-
                     if cargo == 'adm':
-                        self.on_adm()  # Chama callback do admin
+                        self.on_adm()
                     else:
-                        self.on_voto()  # Chama callback do voto
-
+                        self.on_voto()
                 else:
                     print("Senha incorreta!")
             else:
                 print("Usuário não encontrado!")
-            
+
             conn.close()
         except Exception as e:
             print("Erro:", e)
