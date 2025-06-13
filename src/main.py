@@ -15,8 +15,8 @@ cursor.execute("PRAGMA foreign_keys = ON")
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS dimUsuarios(
         id_user INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome_user TEXT NOT NULL,
-        cpf_user TEXT UNIQUE NOT NULL,
+            nome_user TEXT NOT NULL,
+            cpf_user TEXT UNIQUE NOT NULL,
         email_user TEXT UNIQUE NOT NULL,
         senha_user TEXT NOT NULL,
         cargo TEXT NOT NULL CHECK(cargo IN ('adm', 'user'))
