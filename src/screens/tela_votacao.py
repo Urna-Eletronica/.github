@@ -112,7 +112,7 @@ class TelaVotacao(ft.Container):
 
             cursor.execute('''
                 SELECT id_user FROM factVotos WHERE id_user = ?
-            ''', (self.id_user))
+            ''', (self.id_user,))
 
             ja_votou = cursor.fetchone()[0]
 
