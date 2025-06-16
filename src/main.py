@@ -88,10 +88,14 @@ conn.close()
 def main(page: ft.Page):
     page.title = "Sistema de Votação"
 
-    window_width, window_height = ag.size()
+    page.window.width = 1280
+    page.window.height = 720
     page.window.resizable = False
+
+    window_width, window_height = ag.size()
     page.window.left = (window_width - page.window.width)/2
     page.window.top = (window_height - page.window.height)/2
+
     page.padding = 0
 
     def abrir_login():

@@ -21,6 +21,7 @@ class TelaCadastro(ft.Container):
 
         self.nome = ft.TextField(
             label="Digite seu nome",
+            prefix_icon=ft.Icons.PERSON,
             width=500,
             height=50,
             border_radius=10,

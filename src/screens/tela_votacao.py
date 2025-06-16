@@ -16,9 +16,11 @@ class TelaVotacao(ft.Container):
         )
 
         self.pesquisar = ft.TextField(
-            label="Digite o nome da música",
-            width=300,
+            suffix_icon=ft.Icons.SEARCH,
+            width=600,
             height=50,
+            bgcolor=ft.Colors.with_opacity(0.49, ft.Colors.BLACK),
+            border_radius=20,
             on_change=self.filtrar
         )
 
@@ -31,7 +33,6 @@ class TelaVotacao(ft.Container):
         self.lista_musicas_scroll = ft.Container(
             content=self.lista_musicas,
             height=400,
-            bgcolor="#1e1e1e",
             border_radius=10,
             padding=10
         )
@@ -58,7 +59,8 @@ class TelaVotacao(ft.Container):
                             ),
                             ft.Image(src="../assets/logo.png", width=160)
                         ],
-                        alignment=ft.MainAxisAlignment.SPACE_AROUND
+                        alignment=ft.MainAxisAlignment.SPACE_AROUND,
+                        width=600
                     ),
                     self.pesquisar,
                     self.lista_musicas_scroll,
@@ -135,21 +137,29 @@ class TelaVotacao(ft.Container):
             self.todos_os_cards.clear()
 
             for id_musica, nome_musica in dados_musicas:
-                conteudo = ft.ResponsiveRow(
+                conteudo = ft.Row(
                     controls=[
-                        ft.Text(nome_musica, color='#D6AB5F'),
+                        ft.Image(src="a.png"),
+                        ft.Column(
+                            controls=[
+                                ft.Text(nome_musica, color='#D6AB5F', size=18),
+                                ft.Text("Nome autor", size=12)
+                            ],
+                            expand=True
+                        ),
                         ft.ElevatedButton(
-                            text="Votar",
+                            text="Votar", bgcolor="#37323F", color="#D6AB5F",
                             on_click=lambda e, mid=id_musica: self.votar(e, mid)
                         )
-                    ]
+                    ],
                 )
 
                 nova_musica = ft.Container(
                     content=conteudo,
-                    padding=10,
-                    bgcolor="#000000",
-                    width=300
+                    padding=20,
+                    bgcolor=ft.Colors.with_opacity(0.49, ft.Colors.BLACK),
+                    width=600,
+                    border_radius=10
                 )
 
                 self.todos_os_cards.append((nome_musica.lower(), nova_musica))
