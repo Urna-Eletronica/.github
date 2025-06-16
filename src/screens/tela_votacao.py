@@ -111,13 +111,22 @@ class TelaVotacao(ft.Container):
             cursor = conn.cursor()
 
             cursor.execute('''
-                INSERT INTO factVotos (id_user, id_musica, data_voto)
-                VALUES (?, ?, ?)
-            ''', (self.id_user, id_musica, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+                SELECT id_user FROM factVotos WHERE id_user = ?
+            ''', (self.id_user))
 
-            conn.commit()
-            conn.close()
-            print(f"Voto registrado para música ID {id_musica} pelo usuário {self.id_user}.")
+            ja_votou = cursor.fetchone()[0]
+
+            if ja_votou:
+                print("Você já votou em uma música e só poderá votar novamente caso outra votação seja iniciada")
+            else:
+                cursor.execute('''
+                    INSERT INTO factVotos (id_user, id_musica, data_voto)
+                    VALUES (?, ?, ?)
+                ''', (self.id_user, id_musica, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+
+                conn.commit()
+                conn.close()
+                print(f"Voto registrado para música ID {id_musica} pelo usuário {self.id_user}.")
 
         except sql.Error as err:
             print("Erro ao salvar voto:", err)
