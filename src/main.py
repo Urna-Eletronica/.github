@@ -120,9 +120,9 @@ def main(page: ft.Page):
         page.controls.clear()
         page.add(TelaInicioAdm(abrir_voto, abrir_cadastro_m, id_user))
     
-    def abrir_cadastro_m():
+    def abrir_cadastro_m(id_user):
         page.controls.clear()
-        page.add(TelaCadastroM(abrir_adm))
+        page.add(TelaCadastroM(abrir_adm, id_user))
 
     # Inicia na tela de login
     abrir_login()

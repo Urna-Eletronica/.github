@@ -131,19 +131,29 @@ class TelaVotacao(ft.Container):
                 SELECT id_musica, nome_musica FROM dimMusicas
             ''')
             dados_musicas = cursor.fetchall()
-
             conn.commit()
 
             self.todos_os_cards.clear()
 
             for id_musica, nome_musica in dados_musicas:
+                cursor.execute('''
+                    SELECT nome_autor FROM dimAutores
+                    WHERE id_autor IN (
+                        SELECT id_autor FROM factAutorMusica WHERE id_musica = ?
+                    )
+                ''', (id_musica,))
+                autores = [linha[0] for linha in cursor.fetchall()]
+                texto_autores = ", ".join(autores)
+
+                conn.commit()
+
                 conteudo = ft.Row(
                     controls=[
                         ft.Image(src="a.png"),
                         ft.Column(
                             controls=[
                                 ft.Text(nome_musica, color='#D6AB5F', size=18),
-                                ft.Text("Nome autor", size=12)
+                                ft.Text(f"Artistas: {texto_autores}", color='#D6AB5F', size=12)
                             ],
                             expand=True
                         ),

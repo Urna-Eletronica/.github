@@ -2,10 +2,12 @@ import flet as ft
 import sqlite3 as sql
 
 class TelaCadastroM(ft.Container):
-    def __init__(self, voltar_callback):
+    def __init__(self, voltar_callback, id_user):
         super().__init__()
 
         self.voltar_callback = voltar_callback
+
+        self.id_user = id_user
 
         self.voltar_btn = ft.ElevatedButton(
             text="Voltar",
@@ -75,6 +77,7 @@ class TelaCadastroM(ft.Container):
             self.autores.pop()
             self.update()
         print(self.autores)
+
     def salvar(self, e):
         try:
             conn = sql.connect('urna.db')
@@ -150,4 +153,4 @@ class TelaCadastroM(ft.Container):
             print("Erro: CPF ou e-mail já cadastrado.")
         
     def voltar(self, e):
-        self.voltar_callback()
+        self.voltar_callback(self.id_user)

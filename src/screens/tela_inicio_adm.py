@@ -32,7 +32,7 @@ class TelaInicioAdm(ft.Container):
         )
 
     def abrir_votacao(self, e):
-        self.votar_callback()
+        self.votar_callback(self.id_user)
 
     def abrir_cadastro_m(self, e):
-        self.cadastro_m_callback()
+        self.cadastro_m_callback(self.id_user)
