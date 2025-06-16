@@ -1,9 +1,13 @@
 import flet as ft
 import sqlite3 as sql
+import os
+import shutil
 
 class TelaCadastroM(ft.Container):
     def __init__(self, voltar_callback, id_user):
         super().__init__()
+
+        os.makedirs("imagens_musicas", exist_ok=True)
 
         self.voltar_callback = voltar_callback
 
@@ -46,6 +50,17 @@ class TelaCadastroM(ft.Container):
             height=50
         )
 
+        self.caminho_imagem = None
+
+        self.picker = ft.FilePicker(on_result=self.imagem_selecionada)
+
+        self.botao_upload = ft.ElevatedButton(
+            text="Selecionar imagem da música",
+            on_click=lambda e: self.picker.pick_files(allow_multiple=False)
+        )
+
+        self.preview = ft.Image(width=150)
+
         self.confirmar = ft.ElevatedButton(
             text="confirmar",
             on_click=self.salvar
@@ -54,7 +69,7 @@ class TelaCadastroM(ft.Container):
         self.content = (
             ft.Column(
                 controls=[
-                    self.voltar_btn,self.nome_m,self.autor,self.novo_autor,self.tirar_input,self.genero,self.confirmar
+                    self.picker,self.voltar_btn,self.nome_m,self.autor,self.novo_autor,self.tirar_input,self.genero,self.botao_upload,self.confirmar
                     ]
             )
         )
@@ -72,7 +87,7 @@ class TelaCadastroM(ft.Container):
         print(self.autores)
 
     def remover_input(self, e):
-        if len(self.content.controls) > 6:  # Impede remover se houver só 1 autor
+        if len(self.content.controls) > 6:
             del self.content.controls[-5]
             self.autores.pop()
             self.update()
@@ -146,6 +161,11 @@ class TelaCadastroM(ft.Container):
                 conn.close()
                 print("Musica cadastrada!")
 
+                if self.caminho_imagem:
+                    destino = f"imagens_musicas/{idMusica}.png"
+                    shutil.copy(self.caminho_imagem, destino)
+                    print(f"Imagem salva como: {destino}")
+
             else:
                 print("Música já cadastrada")
 
@@ -154,3 +174,15 @@ class TelaCadastroM(ft.Container):
         
     def voltar(self, e):
         self.voltar_callback(self.id_user)
+
+    def imagem_selecionada(self, e):
+        if e.files:
+            self.caminho_imagem = e.files[0].path
+            print("Imagem selecionada:", self.caminho_imagem)
+
+            self.preview.src = self.caminho_imagem
+
+            if self.preview not in self.content.controls:
+                self.content.controls.insert(-1, self.preview)
+
+            self.update()

@@ -147,9 +147,14 @@ class TelaVotacao(ft.Container):
 
                 conn.commit()
 
+                imagem = ft.Image(
+                    src=f'imagens_musicas/{id_musica}.png',
+                    width=150
+                )
+
                 conteudo = ft.Row(
                     controls=[
-                        ft.Image(src="a.png"),
+                        imagem,
                         ft.Column(
                             controls=[
                                 ft.Text(nome_musica, color='#D6AB5F', size=18),
