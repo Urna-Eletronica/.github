@@ -126,11 +126,11 @@ def main(page: ft.Page):
 
     def abrir_voto(id_user):
         page.controls.clear()
-        page.add(TelaVotacao(id_user))
+        page.add(TelaVotacao(id_user, abrir_login))
 
     def abrir_adm(id_user):
         page.controls.clear()
-        page.add(TelaInicioAdm(abrir_voto, abrir_cadastro_m, id_user))
+        page.add(TelaInicioAdm(abrir_voto, abrir_cadastro_m, id_user, abrir_login))
     
     def abrir_cadastro_m(id_user):
         page.controls.clear()

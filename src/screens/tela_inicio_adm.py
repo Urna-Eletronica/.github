@@ -5,19 +5,25 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 
 class TelaInicioAdm(ft.Container):
-    def __init__(self, votar_callback, cadastro_m_callback, id_user):
+    def __init__(self, votar_callback, cadastro_m_callback, id_user, sair_callback):
         super().__init__()
 
         self.id_user = id_user
 
-        self.cadastro_m_callback = cadastro_m_callback
         self.votar_callback = votar_callback
+        self.cadastro_m_callback = cadastro_m_callback
+        self.sair_callback = sair_callback
 
         self.todos_os_cards = []
 
         self.imagem_fundo = ft.Image(
             src="../assets/fundo_pb.png",
             expand=True
+        )
+
+        self.sair = ft.ElevatedButton(
+            text="Sair",
+            on_click=self.sair
         )
 
         self.pesquisar = ft.TextField(
@@ -37,7 +43,7 @@ class TelaInicioAdm(ft.Container):
 
         self.lista_musicas_scroll = ft.Container(
             content=self.lista_musicas,
-            height=400,
+            height=370,
             border_radius=10,
             padding=10
         )
@@ -63,7 +69,18 @@ class TelaInicioAdm(ft.Container):
                         alignment=ft.MainAxisAlignment.SPACE_AROUND,
                         width=600
                     ),
-                    self.pesquisar,
+                    ft.Row(
+                        controls=[
+                            self.pesquisar,
+                            ft.ElevatedButton(
+                                text="Cadastrar Músicas",
+                                on_click=self.abrir_cadastro_m
+                            )
+                        ],
+                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                        width=900,
+                        height=60
+                    ),
                     self.lista_musicas_scroll,
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
@@ -72,13 +89,8 @@ class TelaInicioAdm(ft.Container):
             padding=30,
             bgcolor=ft.Colors.with_opacity(0.44, ft.Colors.BLACK),
             border_radius=20,
-            width=700,
-            height=600
-        )
-
-        self.cadastro_m = ft.ElevatedButton(
-            text="Cadastrar Músicas",
-            on_click=self.abrir_cadastro_m
+            width=1000,
+            height=520
         )
 
         self.footer = ft.Container(
@@ -92,17 +104,13 @@ class TelaInicioAdm(ft.Container):
                 self.imagem_fundo,
                 ft.Column(
                     controls=[
-                        ft.Container(height=50),
+                        ft.Container(height=10),
+                        self.sair,
+                        ft.Container(height=10),
                         ft.Row(
                             controls=[self.container_principal],
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
-                        ft.Container(height=2),
-                        ft.Row(
-                            controls=[self.cadastro_m],
-                            alignment=ft.MainAxisAlignment.CENTER
-                        ),
-                        ft.Container(height=5),
                         ft.Row(
                             controls=[self.footer],
                             alignment=ft.MainAxisAlignment.CENTER
@@ -158,6 +166,8 @@ class TelaInicioAdm(ft.Container):
     # FUNÇÃO PARA INICIAR A VOTAÇÃO
     
     def iniciar_votacao(self, e):
+        os.makedirs("imagens_musicas", exist_ok=True)
+
         try:
             conn = sql.connect('urna.db')
             cursor = conn.cursor()
@@ -256,6 +266,10 @@ class TelaInicioAdm(ft.Container):
                 print("Imagens antigas removidas!")
 
                 conn.commit()
+
+                self.lista_musicas.controls.clear()
+                self.todos_os_cards.clear()
+                self.update()
             
             else:
                 print('Nenhuma votação em andamento!')
@@ -275,8 +289,11 @@ class TelaInicioAdm(ft.Container):
             conn.commit()
 
             self.todos_os_cards.clear()
+            self.lista_musicas.controls.clear()
 
-            for id_musica, nome_musica in dados_musicas:
+            numeracao_atual_card = []
+
+            for i, (id_musica, nome_musica) in enumerate(dados_musicas):
                 cursor.execute('''
                     SELECT nome_autor FROM dimAutores
                     WHERE id_autor IN (
@@ -290,7 +307,7 @@ class TelaInicioAdm(ft.Container):
 
                 imagem = ft.Image(
                     src=f'imagens_musicas/{id_musica}.png',
-                    width=150
+                    width=120
                 )
 
                 conteudo = ft.Row(
@@ -312,12 +329,21 @@ class TelaInicioAdm(ft.Container):
                     content=conteudo,
                     padding=20,
                     bgcolor=ft.Colors.with_opacity(0.49, ft.Colors.BLACK),
-                    width=600,
+                    width=450,
                     border_radius=10
                 )
 
                 self.todos_os_cards.append((nome_musica.lower(), nova_musica))
-                self.lista_musicas.controls.append(nova_musica)
+                numeracao_atual_card.append(nova_musica)
+
+                if len(numeracao_atual_card) == 2 or i == len(dados_musicas) - 1:
+                    linha = ft.Row(
+                        controls=numeracao_atual_card,
+                        spacing=20,
+                        alignment=ft.MainAxisAlignment.CENTER
+                    )
+                    self.lista_musicas.controls.append(linha)
+                    numeracao_atual_card = []
 
             self.update()
 
@@ -328,14 +354,36 @@ class TelaInicioAdm(ft.Container):
 
     def filtrar(self, e):
         filtro = self.pesquisar.value.strip().lower()
-
+        
+        self.lista_musicas.controls.clear()
+        numeracao_atual_card = []
+        
         for nome, card in self.todos_os_cards:
-            card.visible = nome.startswith(filtro)
-
-        self.update()
+            if nome.startswith(filtro):
+                numeracao_atual_card.append(card)
+                
+                if len(numeracao_atual_card) == 2:
+                    linha = ft.Row(
+                        controls=numeracao_atual_card,
+                        spacing=20,
+                        alignment=ft.MainAxisAlignment.CENTER
+                    )
+                    self.lista_musicas.controls.append(linha)
+                    numeracao_atual_card = []
+        
+        if numeracao_atual_card:
+            linha = ft.Row(
+                controls=numeracao_atual_card,
+                spacing=20,
+                alignment=ft.MainAxisAlignment.CENTER
+            )
+            self.lista_musicas.controls.append(linha)
 
     def editar_musica(self, e):
         print("Calma pai não ta pronto")
 
     def excluir_musica(self, e):
         print("Calma pai não se afobe")
+
+    def sair(self, e):
+        self.sair_callback()

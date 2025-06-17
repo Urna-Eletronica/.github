@@ -3,16 +3,23 @@ import sqlite3 as sql
 from datetime import datetime
 
 class TelaVotacao(ft.Container):
-    def __init__(self, id_user):
+    def __init__(self, id_user, sair_callback):
         super().__init__()
 
         self.id_user = id_user
+
+        self.sair_callback = sair_callback
 
         self.todos_os_cards = []
 
         self.imagem_fundo = ft.Image(
             src="../assets/fundo.png",
             expand=True
+        )
+
+        self.sair = ft.ElevatedButton(
+            text="Sair",
+            on_click=self.sair
         )
 
         self.pesquisar = ft.TextField(
@@ -32,7 +39,7 @@ class TelaVotacao(ft.Container):
 
         self.lista_musicas_scroll = ft.Container(
             content=self.lista_musicas,
-            height=400,
+            height=370,
             border_radius=10,
             padding=10
         )
@@ -48,19 +55,20 @@ class TelaVotacao(ft.Container):
                                         content=ft.Text("Bem-vindo a sessão de votação", color="#D6AB5F", size=22),
                                         margin=ft.margin.only(left=20)
                                     ),
-                                    ft.Divider(height=2, thickness=2, color="#D6AB5F"),
+                                    ft.Divider(height=1, thickness=2, color="#D6AB5F"),
                                     ft.Container(
-                                        content=ft.Text("Selecione logo abaixo sua música favorita", size=14),
+                                        content=ft.Text("Selecione logo abaixo sua música favorita", size=10),
                                         margin=ft.margin.only(left=20)
                                     )
                                 ],
                                 alignment=ft.MainAxisAlignment.CENTER,
-                                expand=1
+                                expand=True
                             ),
                             ft.Image(src="../assets/logo.png", width=160)
                         ],
                         alignment=ft.MainAxisAlignment.SPACE_AROUND,
-                        width=600
+                        width=900,
+                        height=60
                     ),
                     self.pesquisar,
                     self.lista_musicas_scroll,
@@ -68,11 +76,11 @@ class TelaVotacao(ft.Container):
                 alignment=ft.MainAxisAlignment.CENTER,
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER
             ),
-            padding=30,
+            padding=20,
             bgcolor=ft.Colors.with_opacity(0.44, ft.Colors.BLACK),
             border_radius=20,
-            width=700,
-            height=600
+            width=1000,
+            height=520
         )
 
         self.footer = ft.Container(
@@ -86,12 +94,13 @@ class TelaVotacao(ft.Container):
                 self.imagem_fundo,
                 ft.Column(
                     controls=[
-                        ft.Container(height=50),
+                        ft.Container(height=10),
+                        self.sair,
+                        ft.Container(height=10),
                         ft.Row(
                             controls=[self.container_principal],
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
-                        ft.Container(height=10),
                         ft.Row(
                             controls=[self.footer],
                             alignment=ft.MainAxisAlignment.CENTER
@@ -143,8 +152,11 @@ class TelaVotacao(ft.Container):
             conn.commit()
 
             self.todos_os_cards.clear()
-
-            for id_musica, nome_musica in dados_musicas:
+            self.lista_musicas.controls.clear()
+            
+            numeracao_atual_card = []
+            
+            for i, (id_musica, nome_musica) in enumerate(dados_musicas):
                 cursor.execute('''
                     SELECT nome_autor FROM dimAutores
                     WHERE id_autor IN (
@@ -158,7 +170,7 @@ class TelaVotacao(ft.Container):
 
                 imagem = ft.Image(
                     src=f'imagens_musicas/{id_musica}.png',
-                    width=150
+                    width=120
                 )
 
                 conteudo = ft.Row(
@@ -182,24 +194,57 @@ class TelaVotacao(ft.Container):
                     content=conteudo,
                     padding=20,
                     bgcolor=ft.Colors.with_opacity(0.49, ft.Colors.BLACK),
-                    width=600,
+                    width=450,
                     border_radius=10
                 )
 
                 self.todos_os_cards.append((nome_musica.lower(), nova_musica))
-                self.lista_musicas.controls.append(nova_musica)
+                numeracao_atual_card.append(nova_musica)
+                
+                if len(numeracao_atual_card) == 2 or i == len(dados_musicas) - 1:
+                    linha = ft.Row(
+                        controls=numeracao_atual_card,
+                        spacing=20,
+                        alignment=ft.MainAxisAlignment.CENTER
+                    )
+                    self.lista_musicas.controls.append(linha)
+                    numeracao_atual_card = []
 
             self.update()
 
             conn.close()
 
-        except sql.Error as e:
+        except Exception as e:
             print("Erro ao carregar músicas:", e)
 
     def filtrar(self, e):
         filtro = self.pesquisar.value.strip().lower()
-
+        
+        self.lista_musicas.controls.clear()
+        numeracao_atual_card = []
+        
         for nome, card in self.todos_os_cards:
-            card.visible = nome.startswith(filtro)
-
+            if nome.startswith(filtro):
+                numeracao_atual_card.append(card)
+                
+                if len(numeracao_atual_card) == 2:
+                    linha = ft.Row(
+                        controls=numeracao_atual_card,
+                        spacing=20,
+                        alignment=ft.MainAxisAlignment.CENTER
+                    )
+                    self.lista_musicas.controls.append(linha)
+                    numeracao_atual_card = []
+        
+        if numeracao_atual_card:
+            linha = ft.Row(
+                controls=numeracao_atual_card,
+                spacing=20,
+                alignment=ft.MainAxisAlignment.CENTER
+            )
+            self.lista_musicas.controls.append(linha)
+        
         self.update()
+
+    def sair(self, e):
+        self.sair_callback()
