@@ -69,6 +69,18 @@ cursor.execute('''
     )
 ''')
 
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS controleVotacao (
+        id INTEGER PRIMARY KEY CHECK (id = 1),
+        status TEXT NOT NULL CHECK (status IN ('ativa', 'inativa'))
+    );
+''')
+
+cursor.execute('''
+    INSERT OR IGNORE INTO controleVotacao (id, status) VALUES (1, 'inativa')
+''')
+
+
 # Verifica se já existe um usuário com cargo 'adm'
 cursor.execute('''
     SELECT COUNT(*) FROM dimUsuarios WHERE cargo = 'adm'

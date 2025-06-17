@@ -82,7 +82,7 @@ class TelaCadastroM(ft.Container):
         )
 
         self.autores.append(novo_input)
-        self.content.controls.insert(-4, novo_input)
+        self.content.controls.insert(-5, novo_input)
         self.update()
         print(self.autores)
 

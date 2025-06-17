@@ -114,7 +114,7 @@ class TelaVotacao(ft.Container):
                 SELECT id_user FROM factVotos WHERE id_user = ?
             ''', (self.id_user,))
 
-            ja_votou = cursor.fetchone()[0]
+            ja_votou = cursor.fetchone()
 
             if ja_votou:
                 print("Você já votou em uma música e só poderá votar novamente caso outra votação seja iniciada")

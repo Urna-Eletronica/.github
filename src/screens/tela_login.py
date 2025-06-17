@@ -102,6 +102,12 @@ class TelaLogin(ft.Container):
 
             resultado = cursor.fetchone()
 
+            cursor.execute('''
+                SELECT status FROM controleVotacao
+            ''')
+
+            votacao = cursor.fetchone()[0]
+
             if resultado:
                 id_user, senha_bd, cargo = resultado
                 if senha_bd == self.senha.value:
@@ -109,7 +115,10 @@ class TelaLogin(ft.Container):
                     if cargo == 'adm':
                         self.on_adm(id_user)
                     else:
-                        self.on_voto(id_user)
+                        if votacao == 'ativa':
+                            self.on_voto(id_user)
+                        else:
+                            print('Votação não está disponivel no momento')
                 else:
                     print("Senha incorreta!")
             else:
