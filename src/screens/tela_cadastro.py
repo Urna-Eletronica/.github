@@ -8,12 +8,12 @@ class TelaCadastro(ft.Container):
         self.login_callback = login_callback
 
         self.imagem_fundo = ft.Image(
-            src="../assets/fundo.png",
+            src="fundo.png",
             expand=True
         )
 
         self.imagem_logo = ft.Image(
-            src="../assets/logo.png",
+            src="logo.png",
             width=150
         )
 

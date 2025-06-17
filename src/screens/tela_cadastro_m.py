@@ -7,8 +7,6 @@ class TelaCadastroM(ft.Container):
     def __init__(self, voltar_callback, id_user):
         super().__init__()
 
-        os.makedirs("imagens_musicas", exist_ok=True)
-
         self.voltar_callback = voltar_callback
 
         self.id_user = id_user

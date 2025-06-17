@@ -3,15 +3,23 @@ import sqlite3 as sql
 from datetime import datetime
 
 class TelaVotacao(ft.Container):
-    def __init__(self, id_user):
+    def __init__(self, id_user, sair_callback):
         super().__init__()
+
+        self.sair_callback = sair_callback
 
         self.id_user = id_user
 
         self.todos_os_cards = []
 
+        self.deslogar = ft.ElevatedButton(
+            text='Sair',
+            width=300,
+            on_click=self.sair
+        )
+
         self.imagem_fundo = ft.Image(
-            src="../assets/fundo.png",
+            src="fundo.png",
             expand=True
         )
 
@@ -57,7 +65,7 @@ class TelaVotacao(ft.Container):
                                 alignment=ft.MainAxisAlignment.CENTER,
                                 expand=1
                             ),
-                            ft.Image(src="../assets/logo.png", width=160)
+                            ft.Image(src="logo.png", width=160)
                         ],
                         alignment=ft.MainAxisAlignment.SPACE_AROUND,
                         width=600
@@ -86,6 +94,7 @@ class TelaVotacao(ft.Container):
                 self.imagem_fundo,
                 ft.Column(
                     controls=[
+                        self.deslogar,
                         ft.Container(height=50),
                         ft.Row(
                             controls=[self.container_principal],
@@ -203,3 +212,6 @@ class TelaVotacao(ft.Container):
             card.visible = nome.startswith(filtro)
 
         self.update()
+
+    def sair(self, e):
+        self.sair_callback()

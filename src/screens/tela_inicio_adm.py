@@ -5,8 +5,10 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 
 class TelaInicioAdm(ft.Container):
-    def __init__(self, votar_callback, cadastro_m_callback, id_user):
+    def __init__(self, votar_callback, cadastro_m_callback, id_user, sair_callback):
         super().__init__()
+
+        self.sair_callback = sair_callback
 
         self.id_user = id_user
 
@@ -15,8 +17,14 @@ class TelaInicioAdm(ft.Container):
 
         self.todos_os_cards = []
 
+        self.deslogar = ft.ElevatedButton(
+            text='Sair',
+            width=300,
+            on_click=self.sair
+        )
+
         self.imagem_fundo = ft.Image(
-            src="../assets/fundo_pb.png",
+            src="fundo_pb.png",
             expand=True
         )
 
@@ -92,6 +100,7 @@ class TelaInicioAdm(ft.Container):
                 self.imagem_fundo,
                 ft.Column(
                     controls=[
+                        self.deslogar,
                         ft.Container(height=50),
                         ft.Row(
                             controls=[self.container_principal],
@@ -158,6 +167,7 @@ class TelaInicioAdm(ft.Container):
     # FUNÇÃO PARA INICIAR A VOTAÇÃO
     
     def iniciar_votacao(self, e):
+        os.makedirs("imagens_musicas", exist_ok=True)
         try:
             conn = sql.connect('urna.db')
             cursor = conn.cursor()
@@ -189,6 +199,7 @@ class TelaInicioAdm(ft.Container):
     # FUNÇÃO PARA FINALIZAR A VOTAÇÃO
 
     def encerrar_votacao(self, e):
+        os.makedirs("imagens_musicas", exist_ok=True)
         try:
             conn = sql.connect('urna.db')
             cursor = conn.cursor()
@@ -259,6 +270,10 @@ class TelaInicioAdm(ft.Container):
             
             else:
                 print('Nenhuma votação em andamento!')
+
+            self.lista_musicas.controls.clear()
+            self.todos_os_cards.clear()
+            self.update()
 
         except Exception as err:
             print("Erro ao encerrar votação:", err)
@@ -339,3 +354,6 @@ class TelaInicioAdm(ft.Container):
 
     def excluir_musica(self, e):
         print("Calma pai não se afobe")
+    
+    def sair(self, e):
+        self.sair_callback()
