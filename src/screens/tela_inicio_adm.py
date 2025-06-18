@@ -90,7 +90,7 @@ class TelaInicioAdm(ft.Container):
         )
 
         self.footer = ft.Container(
-            content=ft.Text("© 2025 Quarteto Music Awards. Todos os direitos reservados.", weight="bold"),
+            content=ft.Text("© 2025 Quarteto Music Awards. Todos os direitos reservados.", weight="bold", color='#ffffff'),
             padding=15,
             alignment=ft.alignment.center
         )
@@ -319,7 +319,7 @@ class TelaInicioAdm(ft.Container):
                             expand=True
                         ),
                         ft.ElevatedButton(text="Editar", on_click=lambda e: self.editar_musica(e)),
-                        ft.ElevatedButton(text="Excluir", on_click=lambda e: self.excluir_musica(e))
+                        ft.ElevatedButton(text="Excluir", on_click=lambda e, id_m=id_musica: self.excluir_musica(e, id_m))
                     ],
                 )
 
@@ -352,8 +352,30 @@ class TelaInicioAdm(ft.Container):
     def editar_musica(self, e):
         print("Calma pai não ta pronto")
 
-    def excluir_musica(self, e):
-        print("Calma pai não se afobe")
-    
+    def excluir_musica(self, e, id_musica):
+        try:
+            conn = sql.connect('urna.db')
+            cursor = conn.cursor()
+
+            cursor.execute('DELETE FROM factAutorMusica WHERE id_musica = ?', (id_musica,))
+
+            cursor.execute('DELETE FROM dimMusicas WHERE id_musica = ?', (id_musica,))
+
+            conn.commit()
+            conn.close()
+
+            imagem_path = f'imagens_musicas/{id_musica}.png'
+            if os.path.exists(imagem_path):
+                os.remove(imagem_path)
+                print(f"Imagem {imagem_path} removida.")
+
+            print(f"Música com ID {id_musica} excluída com sucesso.")
+
+            self.lista_musicas.controls.clear()
+            self.carregar_musicas()
+
+        except Exception as err:
+            print("Erro ao excluir música:", err)
+
     def sair(self, e):
         self.sair_callback()

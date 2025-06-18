@@ -58,7 +58,7 @@ class TelaVotacao(ft.Container):
                                     ),
                                     ft.Divider(height=2, thickness=2, color="#D6AB5F"),
                                     ft.Container(
-                                        content=ft.Text("Selecione logo abaixo sua música favorita", size=14),
+                                        content=ft.Text("Selecione logo abaixo sua música favorita", size=14, color='#ffffff'),
                                         margin=ft.margin.only(left=20)
                                     )
                                 ],
@@ -84,7 +84,7 @@ class TelaVotacao(ft.Container):
         )
 
         self.footer = ft.Container(
-            content=ft.Text("© 2025 Quarteto Music Awards. Todos os direitos reservados.", weight="bold"),
+            content=ft.Text("© 2025 Quarteto Music Awards. Todos os direitos reservados.", weight="bold", color='#ffffff'),
             padding=15,
             alignment=ft.alignment.center
         )

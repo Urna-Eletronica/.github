@@ -25,7 +25,8 @@ class TelaCadastro(ft.Container):
             width=500,
             height=50,
             border_radius=10,
-            bgcolor=cor_inputs
+            bgcolor=cor_inputs,
+            color='#ffffff'
         )
 
         self.cpf = ft.TextField(
@@ -33,7 +34,8 @@ class TelaCadastro(ft.Container):
             width=500,
             height=50,
             border_radius=10,
-            bgcolor=cor_inputs
+            bgcolor=cor_inputs,
+            color='#ffffff'
         )
 
         self.email = ft.TextField(
@@ -42,7 +44,8 @@ class TelaCadastro(ft.Container):
             width=500,
             height=50,
             border_radius=10,
-            bgcolor=cor_inputs
+            bgcolor=cor_inputs,
+            color='#ffffff'
         )
 
         self.senha = ft.TextField(
@@ -52,14 +55,15 @@ class TelaCadastro(ft.Container):
             width=500,
             height=50,
             border_radius=10,
-            bgcolor=cor_inputs
+            bgcolor=cor_inputs,
+            color='#ffffff'
         )
 
         self.container_principal = ft.Container(
             content=ft.Column(
                 controls=[
                     ft.Text("Crie a sua conta", size=24, weight="bold", color="#D6AB5F"),
-                    ft.Text("Preencha seus dados logo abaixo", height=20),
+                    ft.Text("Preencha seus dados logo abaixo", height=20, color='#ffffff'),
                     self.nome,
                     self.cpf,
                     self.email,
@@ -67,7 +71,7 @@ class TelaCadastro(ft.Container):
                     ft.ElevatedButton(text="Criar conta", width=200, height=45, color="#D6AB5F", on_click=self.salvar1),
                     ft.Row(
                         controls=[
-                            ft.Text("Já tem uma conta?"),
+                            ft.Text("Já tem uma conta?", color='#ffffff'),
                             ft.TextButton(text="Entrar", on_click=self.go_login),
                         ],
                         alignment=ft.MainAxisAlignment.CENTER
@@ -84,7 +88,7 @@ class TelaCadastro(ft.Container):
         )
 
         self.footer = ft.Container(
-            content=ft.Text("© 2025 Quarteto Music Awards. Todos os direitos reservados.", weight="bold"),
+            content=ft.Text("© 2025 Quarteto Music Awards. Todos os direitos reservados.", weight="bold", color='#ffffff'),
             padding=15,
             alignment=ft.alignment.center
         )

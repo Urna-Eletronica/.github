@@ -163,6 +163,8 @@ class TelaCadastroM(ft.Container):
                     destino = f"imagens_musicas/{idMusica}.png"
                     shutil.copy(self.caminho_imagem, destino)
                     print(f"Imagem salva como: {destino}")
+                
+                self.voltar_callback(self.id_user)
 
             else:
                 print("Música já cadastrada")

@@ -26,7 +26,9 @@ class TelaLogin(ft.Container):
             width=500,
             height=50,
             border_radius=10,
-            bgcolor=cor_inputs)
+            bgcolor=cor_inputs,
+            color='#ffffff'
+            )
 
         self.senha = ft.TextField(
             label="Senha",
@@ -35,26 +37,29 @@ class TelaLogin(ft.Container):
             width=500,
             height=50,
             border_radius=10,
-            bgcolor=cor_inputs)
+            bgcolor=cor_inputs,
+            color='#ffffff'
+            )
 
         self.container_principal = ft.Container(
             content=ft.Column(
                 controls=[
                     self.imagem_logo,
                     ft.Text("ACESSO À PLATAFORMA", size=24, weight="bold", color="#D6AB5F"),
-                    ft.Text("Seja bem-vindo!", height=40),
+                    ft.Text("Seja bem-vindo!", height=40, color='#ffffff'),
                     self.email,
                     self.senha,
                     ft.ElevatedButton(text="Entrar", width=200, height=45, color="#D6AB5F", on_click=self.verificar),
                     ft.Row(
                         controls=[
-                            ft.Text("Não tem uma conta?"),
+                            ft.Text("Não tem uma conta?", color='#ffffff'),
                             ft.TextButton("Cadastre-se", on_click=self.go_cadastro)
                         ],
                         alignment=ft.MainAxisAlignment.CENTER
                     )
                 ],
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                alignment=ft.MainAxisAlignment.CENTER,
                 spacing=20
             ),
             padding=20,
@@ -65,31 +70,31 @@ class TelaLogin(ft.Container):
         )
 
         self.footer = ft.Container(
-            content=ft.Text("© 2025 Quarteto Music Awards. Todos os direitos reservados.", weight="bold"),
+            content=ft.Text("© 2025 Quarteto Music Awards. Todos os direitos reservados.", weight="bold", color='#ffffff'),
             padding=15,
             alignment=ft.alignment.center
         )
 
         self.content = ft.Stack(
+            expand=True,
             controls=[
                 self.imagem_fundo,
-                ft.Column(
-                    controls=[
-                        ft.Container(height=50),
-                        ft.Row(
-                            controls=[self.container_principal],
-                            alignment=ft.MainAxisAlignment.CENTER
-                        ),
-                        ft.Container(height=10),
-                        ft.Row(
-                            controls=[self.footer],
-                            alignment=ft.MainAxisAlignment.CENTER
-                        )
-                    ],
-                    expand=True
+                ft.Container(
+                    expand=True,
+                    alignment=ft.alignment.center,
+                    content=ft.Column(
+                        controls=[
+                            self.container_principal,
+                            ft.Container(height=20),
+                            self.footer
+                        ],
+                        alignment=ft.MainAxisAlignment.CENTER,
+                        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                        spacing=20
+                    )
                 )
-            ],
-            expand=True
+            ]
+        
         )
 
     def verificar(self, e):
