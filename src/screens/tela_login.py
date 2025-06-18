@@ -10,7 +10,8 @@ class TelaLogin(ft.Container):
 
         self.imagem_fundo = ft.Image(
             src="fundo.png",
-            expand=True
+            expand=True,
+            fit=ft.ImageFit.COVER
         )
 
         self.imagem_logo = ft.Image(
@@ -59,7 +60,6 @@ class TelaLogin(ft.Container):
                     )
                 ],
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                alignment=ft.MainAxisAlignment.CENTER,
                 spacing=20
             ),
             padding=20,
@@ -76,7 +76,6 @@ class TelaLogin(ft.Container):
         )
 
         self.content = ft.Stack(
-            expand=True,
             controls=[
                 self.imagem_fundo,
                 ft.Container(
@@ -85,7 +84,7 @@ class TelaLogin(ft.Container):
                     content=ft.Column(
                         controls=[
                             self.container_principal,
-                            ft.Container(height=20),
+                            ft.Container(height=10),
                             self.footer
                         ],
                         alignment=ft.MainAxisAlignment.CENTER,
@@ -93,8 +92,9 @@ class TelaLogin(ft.Container):
                         spacing=20
                     )
                 )
-            ]
-        
+            ],
+            expand=True,
+            alignment=ft.alignment.center
         )
 
     def verificar(self, e):

@@ -110,7 +110,9 @@ class TelaCadastro(ft.Container):
                         )
                     ]
                 )
-            ]
+            ],
+            expand=True,
+            alignment=ft.alignment.center
         )
 
     def salvar1(self, e):

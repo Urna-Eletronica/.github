@@ -1,6 +1,7 @@
 import flet as ft
 import sqlite3 as sql
 from datetime import datetime
+import time
 
 class TelaVotacao(ft.Container):
     def __init__(self, id_user, sair_callback):
@@ -44,6 +45,8 @@ class TelaVotacao(ft.Container):
             border_radius=10,
             padding=10
         )
+        self.confirmacao = ft.Text("", size=12, color="#00ff15")
+
 
         self.container_principal = ft.Container(
             content=ft.Column(
@@ -98,17 +101,25 @@ class TelaVotacao(ft.Container):
                         ft.Container(height=50),
                         ft.Row(
                             controls=[self.container_principal],
-                            alignment=ft.MainAxisAlignment.CENTER
+                            alignment=ft.MainAxisAlignment.CENTER,
+                            vertical_alignment=ft.CrossAxisAlignment.CENTER 
                         ),
                         ft.Container(height=10),
+                        ft.Row(
+                            controls=[self.confirmacao],
+                            alignment=ft.MainAxisAlignment.CENTER
+                        ),
+
                         ft.Row(
                             controls=[self.footer],
                             alignment=ft.MainAxisAlignment.CENTER
                         )
                     ]
-                )
-            ]
+                ),
+            ],
+            expand=True,
         )
+
 
     def did_mount(self):
         self.carregar_musicas()
@@ -126,7 +137,13 @@ class TelaVotacao(ft.Container):
             ja_votou = cursor.fetchone()
 
             if ja_votou:
-                print("Você já votou em uma música e só poderá votar novamente caso outra votação seja iniciada")
+                self.confirmacao = ft.Text('Você já votou uma vez!', size=12, color="#ff0000")
+                self.content.controls.insert(3, self.confirmacao)
+                self.update()
+                time.sleep(2)
+                self.confirmacao.value = ''
+                self.update()
+                print('Você já votou uma vez!')
             else:
                 cursor.execute('''
                     INSERT INTO factVotos (id_user, id_musica, data_voto)
@@ -135,7 +152,12 @@ class TelaVotacao(ft.Container):
 
                 conn.commit()
                 conn.close()
+                self.confirmacao = ft.Text('Voto registrado!', size=12, color="#00ff15")
                 print(f"Voto registrado para música ID {id_musica} pelo usuário {self.id_user}.")
+                self.update()
+                time.sleep(2)
+                self.confirmacao.value = ''
+                self.update()
 
         except sql.Error as err:
             print("Erro ao salvar voto:", err)

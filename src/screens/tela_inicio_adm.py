@@ -104,7 +104,8 @@ class TelaInicioAdm(ft.Container):
                         ft.Container(height=50),
                         ft.Row(
                             controls=[self.container_principal],
-                            alignment=ft.MainAxisAlignment.CENTER
+                            alignment=ft.MainAxisAlignment.CENTER,
+                            vertical_alignment=ft.CrossAxisAlignment.CENTER 
                         ),
                         ft.Container(height=2),
                         ft.Row(
@@ -118,7 +119,8 @@ class TelaInicioAdm(ft.Container):
                         )
                     ]
                 )
-            ]
+            ],
+            expand=True,
         )
 
 
@@ -350,7 +352,7 @@ class TelaInicioAdm(ft.Container):
         self.update()
 
     def editar_musica(self, e):
-        print("Calma pai não ta pronto")
+        print('editar')
 
     def excluir_musica(self, e, id_musica):
         try:
